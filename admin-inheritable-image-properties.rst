@@ -11,16 +11,16 @@ inheritable admin image properties
 https://blueprints.launchpad.net/nova/+spec/inheritable-admin-image-properties
 
 Make some image properties inheritable even though the user does not have the
-credentials to create them.
+permission to create them.
 
 Problem description
 ===================
 
 An image in glance can have custom properties that have CRUD rules.
-When snapshotting or shelving an instance nova creates a new image in glance
-using the user credentials. If the user does not have the rights to create one
-of the custom property he is not able to create an image, thus he is not able
-to snapshot or shelve the instance.
+When snapshotting or shelving an instance, nova creates a new image in glance
+using the user credentials. If the user does not have the permission to create
+one of the custom property he is not able to create an image, thus he is not
+able to snapshot or shelve the instance.
 
 Use Cases
 ----------
@@ -31,8 +31,8 @@ protected by role, but a cloud owner will want this property to be
 automatically inherited to child images.
 
 Another use case would be an administrator who wants to make operations on
-instances depending on image propertiess. For example taging Windows instances
-so they are run on a Windows hypervisor. The administrator wants this tag to be
+instances depending on image properties. For example tagging Windows instances
+so they are run on a specific aggregate. The administrator wants this tag to be
 inherited automatically, but he does not want the user to be able to change
 this property.
 
@@ -45,7 +45,7 @@ Proposed change
 ===============
 
 We propose to create the option "inheritable_admin_image_properties" containing
-a list of custom properties.
+a list of inheritable custom properties.
 After creation of the image from snapshotting or shelving the instance, those
 properties will be set by nova using its admin credentials.
 
@@ -91,7 +91,7 @@ will get a new token for elevated authentication.
 Other deployer impact
 ---------------------
 
-A new option will be available for in the conf file of nova :
+A new option will be available for in the config file of nova :
 inheritable_admin_image_properties
 
 Developer impact
@@ -127,7 +127,7 @@ None
 Testing
 =======
 
-Unit Tests
+Unit Tests.
 
 Documentation Impact
 ====================
