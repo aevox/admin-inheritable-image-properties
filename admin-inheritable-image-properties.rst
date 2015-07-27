@@ -91,7 +91,8 @@ will get a new token for elevated authentication.
 Other deployer impact
 ---------------------
 
-None
+A new option will be available for in the conf file of nova :
+inheritable_admin_image_properties
 
 Developer impact
 ----------------
