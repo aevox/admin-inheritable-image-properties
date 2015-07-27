@@ -16,7 +16,8 @@ permission to create them.
 Problem description
 ===================
 
-An image in glance can have custom properties that have CRUD rules.
+An image in glance can have custom properties with CRUD rules depending on
+user-roles.
 When snapshotting or shelving an instance, nova creates a new image in glance
 using the user credentials. If the user does not have the permission to create
 one of the custom properties he is not able to create an image, thus he is not
