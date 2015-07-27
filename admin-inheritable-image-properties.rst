@@ -19,7 +19,7 @@ Problem description
 An image in glance can have custom properties that have CRUD rules.
 When snapshotting or shelving an instance, nova creates a new image in glance
 using the user credentials. If the user does not have the permission to create
-one of the custom property he is not able to create an image, thus he is not
+one of the custom properties he is not able to create an image, thus he is not
 able to snapshot or shelve the instance.
 
 Use Cases
@@ -91,7 +91,7 @@ will get a new token for elevated authentication.
 Other deployer impact
 ---------------------
 
-A new option will be available for in the config file of nova :
+A new option will be available in the config file of nova :
 inheritable_admin_image_properties
 
 Developer impact
@@ -127,7 +127,7 @@ None
 Testing
 =======
 
-Unit Tests.
+Unit tests.
 
 Documentation Impact
 ====================
