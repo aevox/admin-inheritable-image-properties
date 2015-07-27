@@ -18,8 +18,9 @@ Problem description
 
 An image in glance can have custom properties that have CRUD rules.
 When snapshotting or shelving an instance nova creates a new image in glance
-using the user credentials. If the user does not have the rights to create a
-custom property he is not able to create or shelve an instance.
+using the user credentials. If the user does not have the rights to create one
+of the custom property he is not able to create an image, thus he is not able
+to snapshot or shelve the instance.
 
 Use Cases
 ----------
@@ -31,9 +32,9 @@ automatically inherited to child images.
 
 Another use case would be an administrator who wants to make operations on
 instances depending on image propertiess. For example taging Windows instances
-so they are run on a Windows hypervisor. We want this tag to be inherited to
-run the snapshot on the same type of hypervisor. We do not want
-the user to be able to change this property.
+so they are run on a Windows hypervisor. The administrator wants this tag to be
+inherited automatically, but he does not want the user to be able to change
+this property.
 
 Project Priority
 -----------------
@@ -44,8 +45,8 @@ Proposed change
 ===============
 
 We propose to create the option "inheritable_admin_image_properties" containing
-a list of properties.
-After creation of the image when instance snapshotting or shelving, those
+a list of custom properties.
+After creation of the image from snapshotting or shelving the instance, those
 properties will be set by nova using its admin credentials.
 
 Alternatives
@@ -69,7 +70,7 @@ None
 Security impact
 ---------------
 
-This change require elevated privilege.
+This change requires elevated privilege.
 
 Notifications impact
 --------------------
@@ -135,12 +136,11 @@ This new feature should be added to the documentation.
 References
 ==========
 
-Old blueprint with same issue:
-https://blueprints.launchpad.net/glance/+spec/inherited-image-property-support
-
-Example of image metadata:
+Example of image metadata :
 http://docs.openstack.org/image-guide/content/image-metadata.html
 
+Old blueprint with same issue :
+https://blueprints.launchpad.net/glance/+spec/inherited-image-property-support
 
 History
 =======
