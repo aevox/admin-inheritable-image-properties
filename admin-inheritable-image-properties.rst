@@ -1,7 +1,5 @@
 ..
- Thised to reflect this new feature.
-
- work is licensed under a Creative Commons Attribution 3.0 Unported
+ This work is licensed under a Creative Commons Attribution 3.0 Unported
  License.
 
  http://creativecommons.org/licenses/by/3.0/legalcode
@@ -18,17 +16,24 @@ credentials to create them.
 Problem description
 ===================
 
+An image in glance can have custom properties that have CRUD rules.
 When snapshotting or shelving an instance nova creates a new image in glance
 using the user credentials. If the user does not have the rights to create a
-custom property he is not able to make any of those operations.
+custom property he is not able to create or shelve an instance.
 
 Use Cases
 ----------
 
 A cloud-administrator wants to store license-cost properties on a per-image
-basis (like how much to charge per hour per cpu). This property can already be
+basis (like how much to charge per hour per cpu). This property can be
 protected by role, but a cloud owner will want this property to be
 automatically inherited to child images.
+
+Another use case would be an administrator who wants to make operations on
+instances depending on image propertiess. For example taging Windows instances
+so they are run on a Windows hypervisor. We want this tag to be inherited to
+run the snapshot on the same type of hypervisor. We do not want
+the user to be able to change this property.
 
 Project Priority
 -----------------
@@ -38,15 +43,18 @@ None
 Proposed change
 ===============
 
-We propose to create a new option in the nova conf file containing a list of
-properties that should be inherited.
-Upon instance snapshotting or shelving those properties will be set after
-creation of the image by nova using its credentials.
+We propose to create the option "inheritable_admin_image_properties" containing
+a list of properties.
+After creation of the image when instance snapshotting or shelving, those
+properties will be set by nova using its admin credentials.
 
 Alternatives
 ------------
 
-None
+An alternative would be to create this functionality in glance. However we do
+not think it is the way to do it since glance behaves like a simple object
+store.
+Inheritance is defined by custom properties which leads us back to our problem.
 
 Data model impact
 -----------------
@@ -77,7 +85,7 @@ Performance Impact
 ------------------
 
 With the option enabled there should be a performance impact as the request
-will get a new token for authentication.
+will get a new token for elevated authentication.
 
 Other deployer impact
 ---------------------
@@ -107,6 +115,7 @@ Work Items
   * Change the behavior in compute.api
   * Create function in image.api
   * Create function in image.glance
+  * Unit tests
 
 Dependencies
 ============
@@ -126,7 +135,12 @@ This new feature should be added to the documentation.
 References
 ==========
 
-None
+Old blueprint with same issue:
+https://blueprints.launchpad.net/glance/+spec/inherited-image-property-support
+
+Example of image metadata:
+http://docs.openstack.org/image-guide/content/image-metadata.html
+
 
 History
 =======
