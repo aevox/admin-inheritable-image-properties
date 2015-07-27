@@ -10,8 +10,8 @@ inheritable admin image properties
 
 https://blueprints.launchpad.net/nova/+spec/inheritable-admin-image-properties
 
-Make some image properties inheritable even though the user does not have the
-permission to create them.
+Make some image properties inheritable when snapshotting or shelving an
+instance, even though the user does not have the permission to create them.
 
 Problem description
 ===================
